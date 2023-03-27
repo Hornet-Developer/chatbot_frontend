@@ -1,0 +1,11 @@
+{
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/api/chatbot": "pages/api/chatbot.js",
+  "/chatbot": "pages/chatbot.html",
+  "/": "pages/index.html",
+  "/login": "pages/login.html",
+  "/settings": "pages/settings.html",
+  "/_error": "pages/_error.js",
+  "/404": "pages/404.html"
+}
