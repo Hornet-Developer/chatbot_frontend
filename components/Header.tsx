@@ -1,4 +1,4 @@
-import LogoIpsum from "@/assets/imges/logoipsum-264.svg";
+import LogoIpsum from "@/assets/imges/DTonomyLogo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import LoginButton from "./LoginButton";

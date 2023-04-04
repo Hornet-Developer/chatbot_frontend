@@ -26,7 +26,7 @@ const Table = ({ data }: TableProps) => {
             <div className="btn-groups">
                 <div className="g-btn"><a href="#">Paid Keyword List</a>
                 </div>
-                <div className="g-btn"> <a href="#">Add to HubSpot</a></div>
+                <div className="g-btn"> <a href="#">Add to ConnectWise</a></div>
                 <div className="g-btn"><a href="#">Organic Keyword List</a>
                 </div>
                 <div className="g-btn"><a href="#">Track</a></div>

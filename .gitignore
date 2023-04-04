@@ -7,10 +7,12 @@
 
 # testing
 /coverage
-
+/Old Version
+/Demo
 # next.js
 # /.next/
 /out/
+.next
 
 # production
 /build

@@ -7,13 +7,13 @@ const Hubspot = () => {
             aria-labelledby="home-tab"
         >
             <Title
-                title="Connected HubSpot Accounts"
+                title="Connected ConnectWise Accounts"
                 btnText="Connect Account"
             />
 
             <div className="sectting-contain">
                 <p>Connect an account to start getting the most out of
-                    ChatSpot. Don&apos;t have a HubSpot account?{" "}
+                    ChatSpot. Don&apos;t have a ConnectWise account?{" "}
                     <a href="#" className="sign-up">Sign Up.</a>
                 </p>
             </div>

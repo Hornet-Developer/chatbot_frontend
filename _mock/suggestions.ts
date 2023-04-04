@@ -12,7 +12,25 @@ const suggestions: suggestionsType = [
         descriptions: [
             {
                 href: "#",
-                desc: "send me that as a daily email update",
+                desc: "Send me that as a daily email update",
+            },
+        ],
+    },
+    {
+        heading: "Tickets",
+        descriptions: [
+            {
+                href: "#",
+                desc: "What is the common issues of my tickets?",
+            },
+        ],
+    },
+    {
+        heading: "Project Management",
+        descriptions: [
+            {
+                href: "#",
+                desc: "Show me the projects that are stalled for 10 days",
             },
         ],
     },
@@ -21,7 +39,7 @@ const suggestions: suggestionsType = [
         descriptions: [
             {
                 href: "#",
-                desc: "What PPC keywords does canva.com buy?",
+                desc: "Write a paragraph on my new cyber security service",
             },
         ],
     },
