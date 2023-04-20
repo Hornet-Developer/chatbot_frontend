@@ -1,4 +1,4 @@
-# Local Environment
+# Local Development Environment
 1. install the dependencies.
 
 ```cmd: npm install```
@@ -6,14 +6,6 @@
 2. start development server.
 
 ```cmd: npm run dev```
-
-# Start Product Environment
-
-1. delete .next directory inside project directory.
-
-2. run command: ```npm run build```
-
-3. ```npm run start```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -24,6 +16,16 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+
+# Start Product Environment
+
+1. delete .next directory inside project directory.
+
+2. run command: ```npm run build```
+
+3. ```npm run start```
+
 
 ## Learn More
 
