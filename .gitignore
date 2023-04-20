@@ -37,6 +37,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Node artifact files
+node_modules/
+
 # Compiled Java class files
 *.class
 
@@ -77,3 +80,4 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+
