@@ -253,21 +253,21 @@ ul.list {
     display: block;
 }
 
-#chatbotPage .heading h3 {
+#chatbotPage .dis:hover {
     background: #b7b1d2;
-    padding: 16px;
     font-size: 15px;
     color: #33475b;
 }
 
 #chatbotPage .dis {
-    background: #f5f8fa;
-    padding: 14px;
+    margin: 14px 0px;
+    padding: 14px 28px;
+    font-size: 15px;
     cursor: pointer;
 }
 
 #chatbotPage .dis a {
-    font-size: 14px;
+    font-size: 15px;
     color: #33475b;
 }
 
@@ -717,4 +717,99 @@ code,
 #chatbotPage .code-header .right a {
     color: #c9c7e3;
     font-size: 12px;
+}
+
+#chatbotPage #chatbot-title .title {
+    font-size: 30px;
+}
+
+#chatbotPage {
+    height: 96vh;
+    background: #e8e8e8;
+    overflow: auto;
+}
+
+#chatbotPage .widget {
+    width: 60%;
+    margin: 10% 20%;    
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+#chatbotPage #chatbot-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#chatbotPage #chatbot-main {
+    margin: 32px 0px;
+}
+
+#chatbotPage #chatbot-main .init {
+    display: flex;
+    justify-content: center;
+    height: 368px;
+    align-items: center;
+}
+
+#chatbotPage #chatbot-main .new-btn a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: 42px;
+    padding: 8px 20px;
+    font-size: 14px;
+    background-color: #00a67d;
+    border-radius: 4px;
+    color: #FFF;
+    border: none;
+}
+
+#chatbotPage #chatbot-title .new-btn a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: 42px;
+    padding: 8px 20px;
+    font-size: 14px;
+    background-color: #00a67d;
+    border-radius: 4px;
+    color: #FFF;
+    border: none;
+}
+
+#chatbotPage #chatbot-main .chatbot-list {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 50px;
+}
+
+#chatbotPage #chatbot-main .chatbot {
+    width: 170px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px #000;
+    border-radius: 4px;
+    box-shadow: 4px 4px 8px;
+}
+
+#chatbotPage #chatbot-main .chatbot-image {
+    width: 170px;
+    height: 220px;
+}
+
+#chatbotPage #chatbot-main .title {
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: auto;
 }

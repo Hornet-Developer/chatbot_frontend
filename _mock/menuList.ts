@@ -13,7 +13,7 @@ const menuList: menuListType = [
         href: "/chatbot",
         src: ChatIcon,
         alt: "chat",
-        text: "Chat"
+        text: "My Chatbots"
     },
     {
         href: "/settings",

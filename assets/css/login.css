@@ -198,6 +198,12 @@ input#email {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
+#loginPage .google-btn img {
+    width: 24px;
+    height: 24px;
+    margin-right: 50px;
+}
+
 #loginPage .google-btn,
 .Login-btn {
     margin: 15px 0;
@@ -223,6 +229,8 @@ input#email {
 }
 
 #loginPage .google-btn {
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -232,8 +240,9 @@ input#email {
 
 #loginPage .google-btn a {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    padding-left: 5%;
 }
 
 #loginPage .form span {
@@ -245,4 +254,29 @@ input#email {
 
 #loginPage input#password {
     margin-bottom: 34px;
+}
+
+#loginPage .oauth-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginPage .oauth-btn span {
+    display: block;
+    margin: 10px 0px;
+}
+
+#loginPage .oauth-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+    gap: 10px;
+}
+
+#loginPage .oauth-google-element {
+    width: 215px;
+    height: 41px;
 }

@@ -604,3 +604,50 @@ input#location,
     display: flex;
     justify-content: space-between;
 }
+
+#settingsPage .dis:hover {
+    background: #b7b1d2;
+    font-size: 15px;
+    color: #33475b;
+}
+
+#settingsPage .dis {
+    margin: 14px 0px;
+    padding: 14px 28px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#settingsPage .dis a {
+    font-size: 15px;
+    color: #33475b;
+}
+
+#settingsPage .scroll-bar-wrap {
+    position: relative;
+}
+
+#settingsPage .scroll-bar-wrap:hover .cover-bar {
+    opacity: 0;
+    -webkit-transition: all .5s;
+}
+
+#settingsPage .scroll-box {
+    width: 100%;
+    overflow-y: scroll;
+    height: 93.1vh;
+}
+
+#settingsPage .scroll-box::-webkit-scrollbar {
+    width: .4em;
+}
+
+.scroll-box::-webkit-scrollbar,
+#settingsPage .scroll-box::-webkit-scrollbar-thumb {
+    overflow: visible;
+    border-radius: 4px;
+}
+
+#settingsPage .scroll-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .2);
+}

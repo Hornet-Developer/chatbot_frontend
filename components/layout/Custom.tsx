@@ -3,7 +3,7 @@ import Header from "../Header";
 
 const Custom = ({ children }: PropsWithChildren) => {
     return (
-        <div className="page">
+        <div className="page" style={{overflow: 'auto'}}>
             <div className="main-wrap">
                 <Header />
                 <main>
