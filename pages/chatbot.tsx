@@ -130,6 +130,7 @@ const Chatbot = () => {
                 </div>
               )}
             </div>
+            <hr />
             <div id="chatbot-main">
               {init ? (
                 <div className="init">
