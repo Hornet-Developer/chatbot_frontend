@@ -1,8 +1,7 @@
 import ChatbotDemo from "./chatbotdemo";
-import Accounts from "./Accounts";
-import Hubspot from "./HubSpot";
 import Writing from "./Writing";
 import ReChatbot from "./rechatbot";
+import Dashboard from "./dashboard";
 
 type PanelsProps = {
     activeTab: number,
@@ -14,8 +13,8 @@ const Panels = ({ activeTab }: PanelsProps) => {
             <div className="setting-body">
                 <div id="myTabContent">
                     {activeTab === 0 && <ChatbotDemo />}
-                    {activeTab === 1 && <Accounts />}
-                    {activeTab === 2 && <Writing />}
+                    {activeTab === 1 && <Writing />}
+                    {activeTab === 2 && <Dashboard />}
                     {activeTab === 3 && <ReChatbot />}
                 </div>
             </div>

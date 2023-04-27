@@ -73,7 +73,7 @@ const ReChatbot = () => {
   return (
     <Fragment>
         <Head>
-            <title>Create New Chatbot</title>
+            <title>Setting</title>
         </Head>
         <section id="rechatbotPage">
             <div className="widget">
