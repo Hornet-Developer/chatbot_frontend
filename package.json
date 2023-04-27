@@ -10,6 +10,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.17",
+    "@material-tailwind/react": "^1.4.2",
     "@react-oauth/google": "^0.10.0",
     "@react-pdf-viewer/core": "^3.12.0",
     "@types/node": "18.15.3",
@@ -27,6 +29,7 @@
     "react-pdf": "^6.2.2",
     "react-pdf-preview": "^1.0.0",
     "react-pdf-viewer": "^0.1.0",
+    "react-router-dom": "^6.10.0",
     "semantic-ui-react": "^2.1.4",
     "sharp": "^0.31.3",
     "typescript": "5.0.2"

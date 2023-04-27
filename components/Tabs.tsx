@@ -6,6 +6,7 @@ type TabsProps = {
 const Tabs = ({ activeTab, handleTabChange }: TabsProps) => {
 
     return (
+        <div className="setting-left-box">
             <div className="scroll-bar-wrap aside-bar scroll-box side-bar-list head-dis-main-box heading">
                 <li
                     onClick={() => handleTabChange(0)}>
@@ -64,6 +65,7 @@ const Tabs = ({ activeTab, handleTabChange }: TabsProps) => {
                     </a>
                 </li>
             </div>
+        </div>
     );
 };
 

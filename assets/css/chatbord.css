@@ -278,7 +278,6 @@ ul.list {
 #chatbotPage .scroll-box {
     width: 100%;
     overflow-y: scroll;
-    height: 93.1vh;
 }
 
 #chatbotPage .scroll-box::-webkit-scrollbar {

@@ -1,4 +1,4 @@
-
+import ChatbotDemo from "./chatbotdemo";
 import Accounts from "./Accounts";
 import Hubspot from "./HubSpot";
 import Writing from "./Writing";
@@ -12,7 +12,7 @@ const Panels = ({ activeTab }: PanelsProps) => {
         <div className="setting-right-box">
             <div className="setting-body">
                 <div id="myTabContent">
-                    {activeTab === 0 && <Hubspot />}
+                    {activeTab === 0 && <ChatbotDemo />}
                     {activeTab === 1 && <Accounts />}
                     {activeTab === 2 && <Writing />}
                 </div>

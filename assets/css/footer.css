@@ -9,6 +9,7 @@ footer.footer-main-box {
     bottom: 0;
     right: 0;
     left: 0;
+    z-index: 2;
 }
 
 .fs-6 {

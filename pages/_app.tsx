@@ -17,6 +17,7 @@ import '@/assets/css/login-responsive.css';
 import '@/assets/css/newchatbot.css';
 
 import '@/assets/css/backbtn.css';
+import '@/assets/css/chatbotdemo.css';
 
 // Files
 import useToggle from '@/hooks/useToggle';
