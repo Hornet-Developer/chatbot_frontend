@@ -1,6 +1,6 @@
 @media (max-width: 1655px) {}
 
-@media (max-width: 1365px) {
+@media (max-width: 1440px) {
     #chatbotPage .col-lg-2 {
         max-width: 20%;
         flex: 0 0 20%;
@@ -10,6 +10,10 @@
         -ms-flex: 0 0 80%;
         flex: 0 0 80%;
         max-width: 80%;
+    }
+
+    #chatbotPage #chatbot-main .chatbot-list {
+        grid-template-columns: auto auto auto;
     }
 }
 
@@ -27,6 +31,10 @@
 
     #chatbotPage .chatbot {
         width: 700px;
+    }
+
+    #chatbotPage #chatbot-main .chatbot-list {
+        grid-template-columns: auto auto;
     }
 }
 
@@ -162,6 +170,12 @@
 
     #chatbotPage .responsive-bar ul.lists li {
         border-bottom: 1px solid white;
+    }
+}
+
+@media (max-width: 850px) {
+    #chatbotPage #chatbot-main .chatbot-list {
+        grid-template-columns: auto;
     }
 }
 

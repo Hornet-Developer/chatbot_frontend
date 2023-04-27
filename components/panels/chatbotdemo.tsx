@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Source_Serif_Pro } from "next/font/google";
 import { getSetting } from "../../redux/actions/settingActions";
+import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -98,12 +99,19 @@ const Chatbot = () => {
     }
   };
 
-  const loadingDiv = () => {
-    return <span className="loader"></span>;
+  const PageReload = () => {
+    if (!inputMessage) {
+      setMessages([
+        { content: "Hi! What can I answer for you today?", role: "assistant" },
+      ]);
+    }
   };
 
   return (
     <div id="chatdemo-container">
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <ArrowPathIcon className="reload" onClick={PageReload} />
+      </div>
       <hr />
       <div className="widget">
         {/* Render the messages */}
