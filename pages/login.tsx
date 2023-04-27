@@ -118,6 +118,7 @@ const Login = () => {
                       cookiePolicy={"single_host_origin"}
                       onSuccess={responseGoogle}
                       isSignedIn={true}
+                      className="oauth-google-element"
                     />
                   </div>
 
