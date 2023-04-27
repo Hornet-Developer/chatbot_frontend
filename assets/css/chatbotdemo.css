@@ -14,6 +14,12 @@
   height: 65vh;
 }
 
+#chatdemo-container .reload {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
 #chatdemo-container .chat-widget {
   height: 50vh;
   overflow: auto;
