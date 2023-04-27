@@ -117,7 +117,6 @@ const Chatbot = () => {
         <section id="chatbotPage">
           <div className="widget">
             <div id="chatbot-title">
-              <div></div>
               <div>
                 <span className="title">
                   <b>My Chatbots</b>
