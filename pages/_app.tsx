@@ -15,6 +15,7 @@ import '@/assets/css/settings-responsive.css';
 import '@/assets/css/login.css';
 import '@/assets/css/login-responsive.css';
 import '@/assets/css/newchatbot.css';
+import '@/assets/css/rechatbot.css';
 
 import '@/assets/css/backbtn.css';
 import '@/assets/css/chatbotdemo.css';

@@ -83,6 +83,7 @@ const NewChatbot = () => {
             <div id="title">
               <span className="title">Create New Chatbot</span>
             </div>
+            <hr />
             <div id="main">
               <div id="list">
                 <span className="title">Data source</span>

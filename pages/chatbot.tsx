@@ -25,7 +25,7 @@ export type ChatDataType = {
 
 
 const Chatbot = () => {
-    const [init, setInit] = useState<boolean>(true);
+    const [init, setInit] = useState<boolean>(false);
     const [input, setInput] = useState<string>('');
     const [chatData, setChatData] = useState<ChatDataType | []>([]);
     const { isSideMenuVisible } = useContext(SideMenuContext);
@@ -85,6 +85,7 @@ const Chatbot = () => {
                                 </div>
                             }
                         </div>
+                        <hr />
                         <div id="chatbot-main">
                             { init ? 
                                 <div className="init">
@@ -93,6 +94,10 @@ const Chatbot = () => {
                                     </div>
                                 </div> : 
                                 <div className="chatbot-list">
+                                    <div className="chatbot">
+                                        <Image className="chatbot-image" src={Unknow} alt="chatbot" title="chatbot" />
+                                        <span className="title">{chatbotname}</span>
+                                    </div>
                                     <div className="chatbot">
                                         <Image className="chatbot-image" src={Unknow} alt="chatbot" title="chatbot" />
                                         <span className="title">{chatbotname}</span>
