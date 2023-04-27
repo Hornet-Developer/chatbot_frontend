@@ -1,6 +1,6 @@
 // Modules
-import { AppProps } from 'next/app';
-import '@/assets/css/bootstrap.min.css';
+import { AppProps } from "next/app";
+import "@/assets/css/bootstrap.min.css";
 
 // Global CSS
 import "@/assets/css/global.css";
@@ -20,20 +20,26 @@ import '@/assets/css/backbtn.css';
 import '@/assets/css/chatbotdemo.css';
 
 // Files
-import useToggle from '@/hooks/useToggle';
+import useToggle from "@/hooks/useToggle";
 import { SideMenuContext } from "@/context";
+import { wrapper } from "@/store";
+import { Provider } from "react-redux";
+import { WrappedBuildError } from "next/dist/server/base-server";
+import { store } from "../redux/store";
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const { isOpen, onToggle } = useToggle();
 
   const value = {
     isSideMenuVisible: isOpen,
-    toggleSideMenu: onToggle
+    toggleSideMenu: onToggle,
   };
 
   return (
-    <SideMenuContext.Provider value={value}>
+    <Provider store={store}>
       <Component {...pageProps} />
-    </SideMenuContext.Provider>
+    </Provider>
   );
 };
+
+export default wrapper.withRedux(App);
