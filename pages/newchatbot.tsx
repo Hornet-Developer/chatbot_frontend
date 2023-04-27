@@ -61,15 +61,22 @@ const NewChatbot = () => {
     }
   };
 
-  const create_bot = () => {
-    console.log("AAA");
+  const create_bot = (data: any) => {
+    const mail = localStorage.getItem("google_mail");
 
-    const sendData = {
-      name: "Bill",
-      characters_number: 2200,
-    };
+    //const mail = "blackphantom0221@gmail.com";
+    if (mail) {
+      const sendData = {
+        chatbot_name: "Bill",
+        characters_number: 2200,
+        mail: mail,
+        embedding_type: data,
+      };
 
-    dispatch(create_botSetting(sendData));
+      dispatch(create_botSetting(sendData));
+    } else {
+      alert("Sign In ...");
+    }
   };
 
   return (
@@ -163,7 +170,7 @@ const NewChatbot = () => {
                     can copy it.
                   </span>
                 </div>
-                <button className="btn" onClick={create_bot}>
+                <button className="btn" onClick={() => create_bot(0)}>
                   Create Chatbot
                 </button>
               </div>
@@ -181,7 +188,7 @@ const NewChatbot = () => {
                 </div>
                 <input className="title" placeholder="Chatbot Name" />
                 <textarea className="data" placeholder="Data" />
-                <button className="btn" onClick={create_bot}>
+                <button className="btn" onClick={() => create_bot(1)}>
                   Create Chatbot
                 </button>
               </div>
@@ -242,7 +249,7 @@ const NewChatbot = () => {
                     />
                     <button className="wbtn"> + Fetch More Links</button>
                   </div>
-                  <button className="bbtn" onClick={create_bot}>
+                  <button className="bbtn" onClick={() => create_bot(2)}>
                     Create Chatbot
                   </button>
                 </div>

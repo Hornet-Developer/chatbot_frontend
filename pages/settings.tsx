@@ -1,40 +1,64 @@
 import Head from "next/head";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Tabs from "@/components/Tabs";
 import Panels from "@/components/panels";
 import Main from "@/components/layout/Main";
+import { getChatbotList } from "../redux/actions/settingActions";
 
 const Settings = () => {
-    const [activeTab, setActiveTab] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<number>(0);
 
-    const handleTabChange = (tabIndex: number) => {
-        console.log('tabIndex : ', tabIndex);
-        setActiveTab(tabIndex);
-    };
+  const handleTabChange = (tabIndex: number) => {
+    console.log("tabIndex : ", tabIndex);
+    setActiveTab(tabIndex);
+  };
 
-    return (
-        <Main>
-            <Fragment>
-                <Head>
-                    <title>Settings</title>
-                </Head>
-                <section id="settingsPage">
-                    <div className="setting-main-box">
-                        <div className="container">
-                            <div className="row pd-box">
-                                <div className="col-lg-4">
-                                    <Tabs activeTab={activeTab} handleTabChange={handleTabChange} />
-                                </div>
-                                <div className="col-lg-8">
-                                    <Panels activeTab={activeTab} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </Fragment>
-        </Main>
-    );
+  useEffect(() => {
+    const mail = localStorage.getItem("google_mail");
+    if (!mail) {
+      window.location.pathname = "/chatbot";
+    } else {
+      const sendData = {
+        mail: mail,
+      };
+      getChatbotList(sendData)
+        .then((res) => {
+          if ((res.data.data = 0)) {
+            window.location.pathname = "/chatbot";
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  return (
+    <Main>
+      <Fragment>
+        <Head>
+          <title>Settings</title>
+        </Head>
+        <section id="settingsPage">
+          <div className="setting-main-box">
+            <div className="container">
+              <div className="row pd-box">
+                <div className="col-lg-4">
+                  <Tabs
+                    activeTab={activeTab}
+                    handleTabChange={handleTabChange}
+                  />
+                </div>
+                <div className="col-lg-8">
+                  <Panels activeTab={activeTab} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Fragment>
+    </Main>
+  );
 };
 
 export default Settings;

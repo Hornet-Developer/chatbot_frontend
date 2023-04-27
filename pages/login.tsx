@@ -11,6 +11,7 @@ import Main from "@/components/layout/Main";
 import GoogleLogin from "react-google-login";
 import MicrosoftLogin from "react-microsoft-login";
 import { gapi } from "gapi-script";
+import { googleAuth } from "../redux/actions/AuthActions";
 
 type Inputs = {
   email: string;
@@ -61,10 +62,9 @@ const Login = () => {
   const responseGoogle = (response: any) => {
     console.log(response.profileObj.name);
     console.log(response.profileObj.email);
-    const userData = {
-      mail: response.profileObj.email,
-      signType: 1,
-    };
+
+    localStorage.setItem("google_mail", response.profileObj.email);
+    localStorage.setItem("signin_type", "0");
   };
 
   return (
