@@ -14,6 +14,11 @@ const ChatbotSetting = () => {
     const [timeLimit, setTimeLimit] = useState<number>(240);
     const [limitHint, setLimitHint] = useState("Too many messages in a row");
 
+    const [initMsg, setInitMsg] = useState('Hi! What can I help you with?');
+
+
+    const [initMsgShowtime, setInitMsgShowtime] = useState<number>(3);
+
     var nf = new Intl.NumberFormat();
     nf.format(charNum);
 
@@ -42,17 +47,24 @@ const ChatbotSetting = () => {
                             <span>Base Prompt (system message)</span>
                             <button className="reset">Reset</button>
                         </div>
-                        <textarea className="chatbot-textarea" defaultValue={basePrompt} />
+                        <textarea className="chatbot-textarea" style={{minHeight: 110}} defaultValue={basePrompt} />
                     </div>
                     <div className="element">
                         <span className="suggest">gpt-4 is much better at following the base prompt and not hallucinating</span>
                         <span className="topic">Model</span>
-                        <input className="chatbot-input" defaultValue={chatbotName} />
+                        <select className="chatbot-select" defaultValue={0}>
+                            <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+                            <option value="gpt-4">gpt-4</option>
+                        </select>
                         <span className="description">1 message using gpt-3.5-turbo costs 1 message credit. 1 message using gpt-4 costs 20 message credits.</span>
                     </div>
                     <div className="element">
                         <span className="topic">Visibilty</span>
-                        <input className="chatbot-input" defaultValue={chatbotName} />
+                        <select className="chatbot-select" defaultValue={2}>
+                            <option value="Private">Private</option>
+                            <option value="private_but_can_be_embedded">private but can be embedded</option>
+                            <option value="public">public</option>
+                        </select>
                         <span className="description">'Private': No one can access your chatbot except you (your account)</span>
                         <span className="description">'Private but can be embedded on website': Other people can't access your chatbot if you send them the link, but you can still embed it on your website and your website visitors will be able to use it. (make sure to set your domains)</span>
                         <span className="description">''Public': Anyone with the link can access it on chatbase.co and can be embedded on your website.</span>
@@ -82,7 +94,10 @@ const ChatbotSetting = () => {
                             <input className="limithint-input" defaultValue={limitHint} />
                         </div>
                     </div>
-                    <ChatInterface />
+                    <ChatInterface initMsg={initMsg} initMsgShowtime={initMsgShowtime}/>
+                    <div className="btn-form">
+                        <button className="btn">Save Changes</button>
+                    </div>
                 </div>
             </section>
         </Fragment>
