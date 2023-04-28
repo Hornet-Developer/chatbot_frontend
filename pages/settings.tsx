@@ -15,6 +15,7 @@ const Settings = () => {
 
   useEffect(() => {
     const mail = localStorage.getItem("google_mail");
+
     if (!mail) {
       window.location.pathname = "/chatbot";
     } else {
@@ -23,7 +24,7 @@ const Settings = () => {
       };
       getChatbotList(sendData)
         .then((res) => {
-          if ((res.data.data = 0)) {
+          if (res.data.data.length == 0) {
             window.location.pathname = "/chatbot";
           }
         })

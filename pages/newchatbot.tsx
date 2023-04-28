@@ -10,11 +10,14 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { create_botSetting } from "@/redux/reducer/settingReducer";
+import { uploadPdfs } from "../redux/actions/fileActions";
+import { send } from "process";
 
 const NewChatbot = () => {
   const [url, setUrl] = React.useState("");
   const [text, setText] = React.useState("");
   const [length, setLength] = React.useState();
+  const [pdfCollection, setPdfCollection] = useState("");
 
   const dispatch = useAppDispatch();
 
@@ -23,6 +26,7 @@ const NewChatbot = () => {
     if (!files) return;
     files.length > 0 && setUrl(URL.createObjectURL(files[0]));
     console.log(files.length);
+    setPdfCollection(files);
   };
 
   const onFiles = () => {
@@ -61,22 +65,42 @@ const NewChatbot = () => {
     }
   };
 
-  const create_bot = (data: any) => {
-    const mail = localStorage.getItem("google_mail");
+  const create_bot = (emebedding_type: any) => {
+    var formData = new FormData();
+    formData.append("mail", "blackphantom0221@gmail.com");
+    formData.append("embedding_type", emebedding_type);
 
-    //const mail = "blackphantom0221@gmail.com";
-    if (mail) {
-      const sendData = {
-        chatbot_name: "Bill",
-        characters_number: 2200,
-        mail: mail,
-        embedding_type: data,
-      };
-
-      dispatch(create_botSetting(sendData));
-    } else {
-      alert("Sign In ...");
+    if (emebedding_type == 0) {
+      for (const key of Object.keys(pdfCollection)) {
+        formData.append("pdfCollection", pdfCollection[key]);
+      }
+    } else if (emebedding_type == 1) {
+      let chatbot_name = document.getElementById("chatbot_name").value;
+      let content = document.getElementById("chatbot_data").value;
+      formData.append("content", content);
+      formData.append("chatbot_name", chatbot_name);
+    } else if (emebedding_type == 2) {
+      formData.append("content", "Web Scraping");
     }
+    dispatch(create_botSetting(formData));
+    // uploadPdfs(formData).then((res) => {
+    //   console.log(res.data);
+    // });
+
+    // const mail = localStorage.getItem("google_mail");
+
+    // if (mail) {
+    //   const sendData = {
+    //     chatbot_name: "Bill",
+    //     characters_number: 2200,
+    //     mail: mail,
+    //     embedding_type: data,
+    //   };
+
+    //   dispatch(create_botSetting(sendData));
+    // } else {
+    //   alert("Sign In ...");
+    // }
   };
 
   return (
@@ -157,22 +181,26 @@ const NewChatbot = () => {
                     Attach a file to see how many characters are in it
                   </span>
                   <br />
-                  <input
-                    type="file"
-                    id="myPdf"
-                    accept=".pdf"
-                    onChange={onChange}
-                  />
-                  <br />
-                  <span className="attach-txt">
-                    NOTE: Uploading a PDF using safari doesn't work, we're
-                    looking into the issue.Make sure the text is OCR'd, i.e. you
-                    can copy it.
-                  </span>
+                  <form onSubmit={() => create_bot(0)}>
+                    <input
+                      type="file"
+                      id="myPdf"
+                      name="pdfConllection"
+                      accept=".pdf"
+                      onChange={onChange}
+                      multiple
+                    />
+                    <br />
+                    <span className="attach-txt">
+                      NOTE: Uploading a PDF using safari doesn't work, we're
+                      looking into the issue.Make sure the text is OCR'd, i.e.
+                      you can copy it.
+                    </span>
+                    <button className="btn" type="submit">
+                      Create Chatbot
+                    </button>
+                  </form>
                 </div>
-                <button className="btn" onClick={() => create_bot(0)}>
-                  Create Chatbot
-                </button>
               </div>
               <div id="text" style={{ display: "none" }}>
                 <div className="back">
@@ -186,8 +214,16 @@ const NewChatbot = () => {
                     <span className="back-btn-txt">Back</span>
                   </button>
                 </div>
-                <input className="title" placeholder="Chatbot Name" />
-                <textarea className="data" placeholder="Data" />
+                <input
+                  className="title"
+                  placeholder="Chatbot Name"
+                  id="chatbot_name"
+                />
+                <textarea
+                  className="data"
+                  placeholder="Data"
+                  id="chatbot_data"
+                />
                 <button className="btn" onClick={() => create_bot(1)}>
                   Create Chatbot
                 </button>

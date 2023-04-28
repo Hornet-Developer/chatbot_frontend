@@ -55,7 +55,8 @@ export const update_botSetting = (data: any) => (dispatch: any) => {
 export const create_botSetting = (data: any) => (dispatch: any) => {
   createSetting(data)
     .then((res: any) => {
-      dispatch(create_setting(res.data));
+      console.log("LOG");
+      //dispatch(create_setting(res.data));
     })
     .catch((error: any) => {
       dispatch(create_setting(error));

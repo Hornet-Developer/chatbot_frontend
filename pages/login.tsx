@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+// import { gapi } from "gapi-script";
 import Image from "next/image";
 import GoogleIcon from "@/assets/imges/google.png";
 import MicrosoftIcon from "@/assets/imges/microsoft.png";
@@ -9,9 +10,8 @@ import inputFields from "@/_mock/login";
 import Head from "next/head";
 import Main from "@/components/layout/Main";
 import GoogleLogin from "react-google-login";
-import MicrosoftLogin from "react-microsoft-login";
 import { gapi } from "gapi-script";
-import { googleAuth } from "../redux/actions/AuthActions";
+import MicrosoftLogin from "react-microsoft-login";
 
 type Inputs = {
   email: string;
@@ -41,6 +41,7 @@ const Login = () => {
     });
   };
   useEffect(() => {
+    localStorage.setItem("google_mail", "blackphantom0221@gmail.com");
     gapi.load("client:auth2", start);
   }, []);
 

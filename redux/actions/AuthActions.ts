@@ -1,5 +1,3 @@
-import { AnyAction } from "redux";
-import { GET_BOT_SETTING, SET_BOT_SETTING } from "./actiontypes";
 import axios from "axios";
 
 export const googleAuth = async (googleData: any) => {

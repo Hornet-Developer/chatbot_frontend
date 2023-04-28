@@ -9,7 +9,11 @@ export const updateSetting = (settingData: any) => {
 };
 
 export const createSetting = (settingData: any) => {
-  return axios.post("http://localhost:8080/api/setting/create", settingData);
+  return axios.post(
+    "http://localhost:8080/api/setting/create",
+    settingData,
+    {}
+  );
 };
 
 export const getChatbotList = (sendData: any) => {
