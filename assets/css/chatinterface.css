@@ -1,0 +1,50 @@
+#chatinterface .topic-form {
+    margin: 20px 0px 32px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatinterface .interface-topic {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#chatinterface .form {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#chatinterface .interface-checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: .25rem;
+}
+
+#chatinterface .chatbot-colorpicker {
+    width: 64px;
+    height: 40px;
+    background: #efefef;
+}
+
+#chatinterface .reference {
+    font-size: 14px;
+    padding-bottom: 8px;
+}
+
+#chatinterface .setting {
+    flex: 1 1 0%;
+}
+
+#chatinterface .interface {
+    flex: 1 1 0%;
+    margin: auto;
+}
+
+#chatinterface .initmag-form {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0px 0px;
+    font-size: 14px;
+    color: #3f3f46;
+}

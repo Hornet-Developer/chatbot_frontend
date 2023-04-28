@@ -44,13 +44,13 @@ const Settings = () => {
           <div className="setting-main-box">
             <div className="container">
               <div className="row pd-box">
-                <div className="col-lg-4">
+                <div className="col-lg-3">
                   <Tabs
                     activeTab={activeTab}
                     handleTabChange={handleTabChange}
                   />
                 </div>
-                <div className="col-lg-8">
+                <div className="col-lg-9">
                   <Panels activeTab={activeTab} />
                 </div>
               </div>

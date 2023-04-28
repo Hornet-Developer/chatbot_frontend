@@ -28,6 +28,7 @@
     "react-google-charts": "^4.0.0",
     "react-google-login": "^5.2.2",
     "react-microsoft-login": "^2.0.1",
+    "react-number-format": "^5.1.4",
     "react-outside-click-handler": "^1.3.0",
     "react-pdf": "^6.2.2",
     "react-pdf-preview": "^1.0.0",
