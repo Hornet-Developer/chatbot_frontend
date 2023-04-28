@@ -41,7 +41,6 @@ const Login = () => {
     });
   };
   useEffect(() => {
-    localStorage.setItem("google_mail", "blackphantom0221@gmail.com");
     gapi.load("client:auth2", start);
   }, []);
 
@@ -65,7 +64,6 @@ const Login = () => {
     console.log(response.profileObj.email);
 
     localStorage.setItem("google_mail", response.profileObj.email);
-    localStorage.setItem("signin_type", "0");
   };
 
   return (

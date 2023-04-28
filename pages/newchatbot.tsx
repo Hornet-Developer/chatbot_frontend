@@ -67,7 +67,8 @@ const NewChatbot = () => {
 
   const create_bot = (emebedding_type: any) => {
     var formData = new FormData();
-    formData.append("mail", "blackphantom0221@gmail.com");
+    let mail = localStorage.getItem("google_mail");
+    formData.append("mail", mail);
     formData.append("embedding_type", emebedding_type);
 
     if (emebedding_type == 0) {

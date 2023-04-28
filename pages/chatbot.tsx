@@ -42,7 +42,7 @@ const Chatbot = () => {
   const [input, setInput] = useState<string>("");
   const [chatData, setChatData] = useState<ChatDataType | []>([]);
   const [chatId, setChatId] = useState();
-  const [chatbotList, setChatbotList] = useState([{chatbot_id: 1, chatbot_name: 1}, {chatbot_id: 1, chatbot_name: 1}]);
+  const [chatbotList, setChatbotList] = useState([]);
   const { isSideMenuVisible } = useContext(SideMenuContext);
   const isNotInput = trim(input) === "";
   const askTime = useTime();
