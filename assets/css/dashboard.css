@@ -21,6 +21,7 @@
 #dashboardPage .form {
     display: flex;
     flex-direction: column;
+    padding: 16px 0px;
 }
 
 #dashboardPage .title {
@@ -58,4 +59,55 @@
     font-size: 30px;
     color: #111827;
     margin: 4px 0px 0px;
+}
+
+#dashboardPage .msglog-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-top-width: 1px;
+    border-bottom-width: 0px;
+}
+
+#dashboardPage .msglog-form {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#dashboardPage .msg-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    color: #a0aec0;
+}
+
+#dashboardPage .msg-2 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: .25rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+
+#dashboardPage .user-msg {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#dashboardPage .msg-time {
+    white-space: nowrap;
+}
+
+#dashboardPage .bot-msg {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }

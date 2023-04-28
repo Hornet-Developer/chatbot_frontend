@@ -1,4 +1,8 @@
-@media (max-width: 1655px) {}
+@media (max-width: 1610px) {
+    #chatbotPage #chatbot-main .chatbot-list {
+        grid-template-columns: auto auto auto;
+    }
+}
 
 @media (max-width: 1440px) {
     #chatbotPage .col-lg-2 {
@@ -11,9 +15,11 @@
         flex: 0 0 80%;
         max-width: 80%;
     }
+}
 
+@media (max-width: 1260px) {
     #chatbotPage #chatbot-main .chatbot-list {
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto auto;
     }
 }
 
@@ -31,10 +37,6 @@
 
     #chatbotPage .chatbot {
         width: 700px;
-    }
-
-    #chatbotPage #chatbot-main .chatbot-list {
-        grid-template-columns: auto auto;
     }
 }
 

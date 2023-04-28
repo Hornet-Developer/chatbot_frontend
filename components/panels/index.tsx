@@ -1,5 +1,5 @@
 import ChatbotDemo from "./chatbotdemo";
-import Writing from "./Writing";
+import ChatbotSetting from "./chatbotsetting";
 import ReChatbot from "./rechatbot";
 import Dashboard from "./dashboard";
 
@@ -13,7 +13,7 @@ const Panels = ({ activeTab }: PanelsProps) => {
             <div className="setting-body">
                 <div id="myTabContent">
                     {activeTab === 0 && <ChatbotDemo />}
-                    {activeTab === 1 && <Writing />}
+                    {activeTab === 1 && <ChatbotSetting />}
                     {activeTab === 2 && <Dashboard />}
                     {activeTab === 3 && <ReChatbot />}
                 </div>

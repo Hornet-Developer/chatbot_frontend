@@ -38,11 +38,11 @@ export type ChatbotType = {
 };
 
 const Chatbot = () => {
-  const [init, setInit] = useState<boolean>(true);
+  const [init, setInit] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const [chatData, setChatData] = useState<ChatDataType | []>([]);
   const [chatId, setChatId] = useState();
-  const [chatbotList, setChatbotList] = useState([]);
+  const [chatbotList, setChatbotList] = useState([{chatbot_id: 1, chatbot_name: 1}, {chatbot_id: 1, chatbot_name: 1}]);
   const { isSideMenuVisible } = useContext(SideMenuContext);
   const isNotInput = trim(input) === "";
   const askTime = useTime();
