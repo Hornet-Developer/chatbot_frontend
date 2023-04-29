@@ -5,6 +5,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import Title from "./Title";
 
 import Modal from '@mui/material/Modal';
+import { Box } from "@mui/material";
 
 const Dashboard = () => {
 
@@ -22,7 +23,9 @@ const Dashboard = () => {
     const handleClose = () => setModalState(false);
 
     const [messages, setMessages] = useState([
-        { content: "Hi! What can I answer for you today?", role: "assistant" },
+        { content: "Hi! What can I answer for you today?", role: "bot" },
+        { content: "what tech?", role: "user" },
+        { content: "The technologies used in the given context include Sidekiq, Redis, Caching, Elasticsearch, Pusher, Memcached, Ruby on Rails, TailwindCSS, RSpec, Capybara, Pheonix Liveview, Node.js, React, Vue.js, Redux, API, GraphQL, PostgreSQL, MySQL, Redis, MongoDB, Kibana, SQS, ECS, Beanstalk, and CI/CD.", role: "bot" },
       ]);
 
     const log_select = async (conversation_id: any) => {
@@ -38,31 +41,26 @@ const Dashboard = () => {
                 <title>Setting</title>
             </Head>
             <Modal open={modalState} onClose={handleClose} >
-                <div id="chatlog-container">
+                <Box id="chatlog-container">
                     <div className="chatlog-widget">
                         <div style={{ display: "flex", justifyContent: "flex-end" }}>
                             <ArrowPathIcon className="reload" />
                         </div>
                         <hr />
-                        <div className="widget">
-                            {/* Render the messages */}
-                            <div className="chat-widget">
-                                <div className="chat-content">
-                                    {messages.map((message, index) => (
-                                    <div
-                                        key={index}
-                                        className={`message ${
-                                        message.role === "user" ? "user" : "bot"
-                                        }`}
-                                    >
-                                        {message.content}
-                                    </div>
-                                    ))}
-                                </div>
+                        <div className="chat-content">
+                            {messages.map((message, index) => (
+                            <div
+                                key={index}
+                                className={`message ${
+                                message.role === "user" ? "user" : "bot"
+                                }`}
+                            >
+                                {message.content}
                             </div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                </Box>
             </Modal>
             <section id="dashboardPage">
                 <div className="widget">

@@ -117,15 +117,14 @@
 }
 
 #chatlog-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 512px;
 }
 
 #chatlog-container .chatlog-widget {
-    max-width: 512px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -133,11 +132,50 @@
     border: none;
     border-radius: 8px;
     padding: 20px;
-    height: 80vh;
-    margin: auto;
+    height: 608px;
+    margin-bottom: 16px;
+    margin: 0px auto;
+    overflow: auto;
 }
 
 #chatlog-container .reload {
     width: 20px;
     height: 20px;
+}
+
+#chatlog-container .chat-content {
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.75;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatlog-container .message {
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    text-align: left;
+}
+
+#chatlog-container .user {
+    background-color: rgb(79, 69, 228);
+    color: white;
+    align-self: flex-end;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    margin-left: 10%;
+}
+
+#chatlog-container .bot {
+    background-color: #f4f4f5;
+    color: #4b5563;
+    align-self: flex-start;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    margin-right: 10%;
 }
