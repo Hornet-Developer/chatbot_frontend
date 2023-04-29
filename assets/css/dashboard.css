@@ -76,6 +76,10 @@
     justify-content: space-between;
 }
 
+#dashboardPage .msglog-form:hover {
+    background-color: #F9FAFB;
+}
+
 #dashboardPage .msg-1 {
     display: flex;
     flex-direction: row;
@@ -110,4 +114,30 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+}
+
+#chatlog-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+}
+
+#chatlog-container .chatlog-widget {
+    max-width: 512px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    height: 80vh;
+    margin: auto;
+}
+
+#chatlog-container .reload {
+    width: 20px;
+    height: 20px;
 }
