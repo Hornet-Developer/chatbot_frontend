@@ -58,6 +58,7 @@ const Chatbot = () => {
   };
 
   const handleRequest = async () => {
+    console.log("AAA");
     const newRequest = {
       question: input,
       askTime,
