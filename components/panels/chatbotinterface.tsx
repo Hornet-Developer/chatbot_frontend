@@ -1,26 +1,118 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 const ChatInterface = (props: any) => {
-    const [url, setUrl] = React.useState("");
+    const initMesssag = 'Hi! What can I help you with?';
+    const userMsgColor = "#4B3D8F";
+    const iconColor = '#37A987';
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const [msgBackColor, setMsgBackColor] = useState("#F4F4F5");
+    const [msgColor, setMsgColor] = useState("#000000");
+
+
+    const onChangeProfileIconUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
         let files = e.target.files;
         if (!files) return;
-        files.length > 0 && setUrl(URL.createObjectURL(files[0]));
+        files.length > 0 && props.setProfileIconUrl(URL.createObjectURL(files[0]));
         console.log(files.length);
     };
 
-    const onCheck = () => {
-        var status = document.getElementById('avatar')?.style.display;
-        if ( status == 'flex' ) {
-            status = 'none';
+    const onChangeChatIconUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let files = e.target.files;
+        if (!files) return;
+        files.length > 0 && props.setChatIconUrl(URL.createObjectURL(files[0]));
+        console.log(files.length);
+    };
+
+    const setInitMsg = () => {
+        props.setInitMsg(initMesssag);
+        document.getElementById('initMsg').value = initMesssag;
+    }
+
+    const setUserMsgColor = () => {
+        props.setUserMsgColor(userMsgColor);
+        document.getElementById('userMsgColor').value = userMsgColor;
+    }
+
+    const setIconColor = () => {
+        props.setIconColor(iconColor);
+        document.getElementById('iconColor').value = iconColor;
+    }
+
+    const onChangeInitMsg = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setInitMsg(e.target.value);
+    }
+
+    const onChangeSugMsg = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setSugMsg(e.target.value);
+    }
+
+    const onChangeBackColor = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setBackColor(e.target.value);
+        if (e.target.value == 'dark') {
+            props.setBackColor("#000000");
+            document.getElementById('myBtn').style.filter = "invert(1)";
+            document.getElementById('reload').style.filter = "brightness(0) invert(1)";
+
+            setMsgBackColor("#3F3F45");
+            setMsgColor("#FFFFFF");
         }
 
-        if ( status == 'none' ) {
-            status = 'flex';
+        if (e.target.value == 'light') {
+            props.setBackColor("#FFFFFF");
+            document.getElementById('myBtn').style.filter = "brightness(1) invert(0)";
+            document.getElementById('reload').style.filter = "brightness(1) invert(0)";
+
+            setMsgBackColor("#F4F4F5");
+            setMsgColor("#000000");
         }
-    };
+    }
+
+    const onChangeUserMsgColor = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setUserMsgColor(e.target.value);
+    }
+
+    const onChangeIconColor = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setIconColor(e.target.value);
+    }
+
+    const onChangeIcon = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value == 'right') {
+            props.setIconPos("flex-end");
+        }
+
+        if (e.target.value == 'left') {
+            props.setIconPos("flex-start");
+        }
+    }
+
+    const onChangeInitMsgShowtime = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setInitMsgShowtime(e.target.value);
+    }
+
+    const onChangeProfileIcon = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setCheckProfileIcon(e.target.checked);
+        if (props.checkProfileIcon) {
+            document.getElementById('profileicon').style.display = "flex";
+            document.getElementById('profileimg').style.display = "flex";
+        } else {
+            document.getElementById('profileicon').style.display = "none";
+            document.getElementById('profileimg').style.display = "none";
+        }
+    }
+
+    const onChangeChatIcon = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setCheckChatIcon(e.target.checked);
+        if (props.checkChatIcon) {
+            document.getElementById('chaticon').style.display = "flex";
+        } else {
+            document.getElementById('chaticon').style.display = "none";
+        }
+    }
+
+    const onChangeDisplayName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setDisplayName(e.target.value);
+    }
 
     return (
         <div id="chatinterface">
@@ -33,23 +125,32 @@ const ChatInterface = (props: any) => {
                     <div className="element">
                         <div className="topic">
                             <span>Initial Messages</span>
-                            <button className="reset">Reset</button>
+                            <button className="reset" onClick={setInitMsg}>Reset</button>
                         </div>
-                        <textarea className="chatbot-textarea" defaultValue={props.initMsg} />
+                        <textarea 
+                            id="initMsg" 
+                            className="chatbot-textarea" 
+                            defaultValue={props.initMsg} 
+                            onChange={onChangeInitMsg}
+                        />
                         <span className="description">Enter each message in a new line.</span>
                     </div>
                     <div className="element">
                         <div className="topic">
                             <span>Suggested Messages</span>
                         </div>
-                        <textarea className="chatbot-textarea" placeholder="What is example.com?,How does it work?" />
+                        <textarea 
+                            className="chatbot-textarea" 
+                            placeholder="What is example.com?,How does it work?"
+                            onChange={onChangeSugMsg}
+                        />
                         <span className="description">Enter each message in a new line.</span>
                     </div>
                     <div className="element">
                         <div className="topic">
                             <span>Theme</span>
                         </div>
-                        <select className="chatbot-select" defaultValue={0}>
+                        <select className="chatbot-select" defaultValue={0} onChange={onChangeBackColor}>
                             <option value="light">light</option>
                             <option value="dark">dark</option>
                         </select>
@@ -58,26 +159,34 @@ const ChatInterface = (props: any) => {
                         <div className="topic">
                             <span>Update chatbot profile picture</span>
                         </div>
-                        <input type="file" className="chatbot-input" onChange={onChange}/>
+                        <input type="file" className="chatbot-input" accept="image/png, image/gif, image/jpeg" onChange={onChangeProfileIconUrl}/>
                     </div>
                     <div className="element">
                         <div className="topic">
                             <span>Remove Chatbot Profile Picture</span>
                         </div>
-                        <input id="profileiconcheck" className="interface-checkbox" type="checkbox" onChange={onCheck} />
+                        <input 
+                            id="profileiconcheck" 
+                            className="interface-checkbox" 
+                            type="checkbox" 
+                            checked={props.checkProfileIcon} 
+                            onChange={onChangeProfileIcon} />
                     </div>
                     <div className="element">
                         <div className="topic">
                             <span>Display name</span>
                         </div>
-                        <input className="chatbot-input" />
+                        <input 
+                            className="chatbot-input"
+                            onChange={onChangeDisplayName}
+                        />
                     </div>
                     <div className="element">
                         <div className="topic">
                             <span>User Message Color</span>
-                            <button className="reset">Reset</button>
+                            <button className="reset" onClick={setUserMsgColor}>Reset</button>
                         </div>
-                        <input className="chatbot-colorpicker" type="color" list="presetColors" defaultValue={"#4f45e4"}/>
+                        <input id="userMsgColor" className="chatbot-colorpicker" type="color" list="presetColors" defaultValue={props.userMsgColor} onChange={onChangeUserMsgColor}/>
                     </div>
                     <div className="element">
                         <span className="reference">**If the changes here don't show up immediately on your website try clearing your browser cache or use incognito. (New users will see the changes immediately)**</span>
@@ -86,26 +195,31 @@ const ChatInterface = (props: any) => {
                         <div className="topic">
                             <span>Update chatbot profile picture</span>
                         </div>
-                        <input type="file" className="chatbot-input" onChange={onChange}/>
+                        <input 
+                            type="file" 
+                            className="chatbot-input" 
+                            accept="image/png, image/gif, image/jpeg" 
+                            onChange={onChangeChatIconUrl}
+                        />
                     </div>
                     <div className="element">
                         <div className="topic">
-                            <span>Remove Chatbot Profile Picture</span>
+                            <span>Remove chat icon</span>
                         </div>
-                        <input id="chaticoncheck" className="interface-checkbox" type="checkbox" onChange={onCheck} />
+                        <input id="chaticoncheck" className="interface-checkbox" type="checkbox" checked={props.checkChatIcon} onChange={onChangeChatIcon} />
                     </div>
                     <div className="element">
                         <div className="topic">
                             <span>User Message Color</span>
-                            <button className="reset">Reset</button>
+                            <button className="reset" onClick={setIconColor}>Reset</button>
                         </div>
-                        <input className="chatbot-colorpicker" type="color" list="presetColors" defaultValue={"#000000"}/>
+                        <input id="iconColor" className="chatbot-colorpicker" type="color" list="presetColors" defaultValue={props.iconColor} onChange={onChangeIconColor}/>
                     </div>
                     <div className="element">
                         <div className="topic">
                             <span>Align Chat Bubble Button</span>
                         </div>
-                        <select className="chatbot-select" defaultValue={0}>
+                        <select className="chatbot-select" defaultValue={0} onChange={onChangeIcon}>
                             <option value="right">right</option>
                             <option value="left">left</option>
                         </select>
@@ -113,41 +227,62 @@ const ChatInterface = (props: any) => {
                     <div className="initmag-form">
                         <span>Auto show initial messages after</span>
                         <div className="limit-form">
-                            <input className="limit-input" type="number" defaultValue={props.initMsgShowtime}/>
+                            <input 
+                                className="limit-input" 
+                                type="number" 
+                                defaultValue={props.initMsgShowtime} 
+                                onChange={onChangeInitMsgShowtime}
+                            />
                             <span>seconds (negative to disable)</span>
                         </div>
                     </div>
                 </div>
                 <div className="interface">
                     <div id="chatinterface-container">                    
-                        <div className="widget">
-                            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                                <ArrowPathIcon className="reload"/>
+                        <div className="widget" style={{background: `${props.backColor}`}}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
+                                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                    {
+                                        props.profileIconUrl ?
+                                        (<img id="profileimg" className="profileicon" src={props.profileIconUrl} />) :
+                                        (<div />)
+                                    }
+                                    {
+                                        props.displayName ?
+                                        (<span style={{color: `${msgColor}` }} id="displayname" className="displayname">{props.displayName}</span>) :
+                                        (<div />)
+                                    }
+                                </div>
+                                <ArrowPathIcon id="reload" className="reload"/>
                             </div>
-                            <hr />
+                            <hr style={{borderColor: '#e4e4e7'}} />
                             {/* Render the messages */}
                             <div className="chat-widget">
                                 <div className="chat-content">
-                                    <div className="message bot">Hi! What can I help you with?</div>
-                                    <div className="message user">Hi!</div>
+                                    <div style={{background: `${msgBackColor}`, color: `${msgColor}`}} className="message bot">{props.initMsg}</div>
+                                    <div style={{background: `${props.userMsgColor}`}} className="message user">Hi!</div>
                                 </div>
                             </div>
                             <div>
                             {/* Input for sending messages */}
-                            <div className="help-box-container">
-                                <div className="help-box">
-                                    {" "}
-                                    What questions can you answer for me?{" "}
-                                </div>
-                            </div>
-                            <div className="input-container">
+                            { props.sugMsg ? 
+                                (
+                                    <div className="help-box-container">
+                                        <div style={{background: `${msgBackColor}`, color: `${msgColor}`}} className="help-box" id="helpbox">
+                                            {" "}
+                                            {props.sugMsg}{" "}
+                                        </div>
+                                    </div>
+                                ) : ""
+                            }
+                            <div className="input-container" style={{backgroundColor: "transparent"}}>
                                 <input
                                 id="input1"
                                 type="text"
                                 className="input-text"
-                                placeholder="Type your message here..."
+                                style={{backgroundColor: "transparent", color: `${msgColor}`}}
                                 />
-                                <button
+                                <button 
                                 id="myBtn"
                                 className="send-button"
                                 >
@@ -165,10 +300,14 @@ const ChatInterface = (props: any) => {
                             </div>
                         </div>
                     </div>
-                    <div className="chaticon-form">
-                        <div className="chaticon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.3" stroke="white" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"></path></svg>
-                        </div>
+                    <div id="chaticon" className="chaticon-form" style={{justifyContent: `${props.iconPos}`}}>
+                        {
+                            props.chatIconUrl && !props.checkChatIcon ?
+                            (<img id="chatimg" className="chaticon" src={props.chatIconUrl}/>) : 
+                            (<div className="chaticon" style={{background: `${props.iconColor}`}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.3" stroke="white" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"></path></svg>
+                            </div>)
+                        }
                     </div>
                 </div>
             </div>

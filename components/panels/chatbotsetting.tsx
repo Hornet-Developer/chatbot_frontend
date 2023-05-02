@@ -15,6 +15,16 @@ const ChatbotSetting = () => {
     const [limitHint, setLimitHint] = useState("Too many messages in a row");
 
     const [initMsg, setInitMsg] = useState('Hi! What can I help you with?');
+    const [sugMsg, setSugMsg] = useState('');
+    const [displayName, setDisplayName] = useState('');
+    const [backColor, setBackColor] = useState('#FFFFFF');
+    const [userMsgColor, setUserMsgColor] = useState('#4B3D8F');
+    const [iconColor, setIconColor] = useState("#37A987");
+    const [iconPos, seticonPos] = useState("flex-end");
+    const [checkProfileIcon, setCheckProfileIcon] = useState<boolean>(false);
+    const [checkChatIcon, setCheckChatIcon] = useState<boolean>(false);
+    const [profileIconUrl, setProfileIconUrl] = useState("");    
+    const [chatIconUrl, setChatIconUrl] = useState("");
 
 
     const [initMsgShowtime, setInitMsgShowtime] = useState<number>(3);
@@ -94,7 +104,32 @@ const ChatbotSetting = () => {
                             <input className="limithint-input" defaultValue={limitHint} />
                         </div>
                     </div>
-                    <ChatInterface initMsg={initMsg} initMsgShowtime={initMsgShowtime}/>
+                    <ChatInterface 
+                        initMsg={initMsg} 
+                        setInitMsg={setInitMsg}
+                        initMsgShowtime={initMsgShowtime}
+                        setInitMsgShowtime={setInitMsgShowtime}
+                        sugMsg={sugMsg}
+                        setSugMsg={setSugMsg}
+                        displayName={displayName}
+                        setDisplayName={setDisplayName}
+                        backColor={backColor}
+                        setBackColor={setBackColor}
+                        setUserMsgColor={setUserMsgColor}
+                        userMsgColor={userMsgColor}
+                        iconColor={iconColor}
+                        setIconColor={setIconColor}
+                        iconPos={iconPos}
+                        setIconPos={seticonPos}
+                        checkProfileIcon={checkProfileIcon}
+                        setCheckProfileIcon={setCheckProfileIcon}
+                        checkChatIcon={checkChatIcon}
+                        setCheckChatIcon={setCheckChatIcon}
+                        profileIconUrl={profileIconUrl}
+                        setProfileIconUrl={setProfileIconUrl}
+                        chatIconUrl={chatIconUrl}
+                        setChatIconUrl={setChatIconUrl}
+                    />
                     <div className="btn-form">
                         <button className="btn">Save Changes</button>
                     </div>
