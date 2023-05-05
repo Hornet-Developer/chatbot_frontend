@@ -79,56 +79,29 @@ const Login = () => {
               <div className="log-google">
                 <div className="flex">
                   <div className="login">
-                    <div className="login-title">
-                      <h4>Login</h4>
-                    </div>
-                    <form action="#">
-                      <div className="form">
-                        {inputFields.map((field, index) => (
-                          <Input
-                            key={index}
-                            value={inputs[field.name as keyof Inputs]}
-                            onChange={handleChange}
-                            {...field}
-                          />
-                        ))}
-
-                        <span>
-                          <a href="#">Forgot password?</a>
-                        </span>
+                    <div className="oauth-btn">
+                      <div className="oauth-element">
+                        <GoogleLogin
+                          clientId="1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com"
+                          buttonText="Sign in with Google"
+                          scope="profile"
+                          onFailure={onFailure}
+                          cookiePolicy={"single_host_origin"}
+                          onSuccess={responseGoogle}
+                          isSignedIn={true}
+                          className="oauth-google-element"
+                        />
                       </div>
-                    </form>
-                    <div className="login-google">
-                      <div className="Login-btn">
-                        <a href="#">Login</a>
+
+                      <div className="oauth-element">
+                        <MicrosoftLogin
+                          clientId={"baa3b947-094b-490f-91c6-318f2eabf0fe"}
+                          authCallback={authHandler}
+                          graphScopes={["user.read", "Files.Read.All"]}
+                          children={undefined}
+                        />
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div className="oauth-btn">
-                  <span>--- OR ---</span>
-
-                  <div className="oauth-element">
-                    <GoogleLogin
-                      clientId="1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com"
-                      buttonText="Sign in with Google"
-                      scope="profile"
-                      onFailure={onFailure}
-                      cookiePolicy={"single_host_origin"}
-                      onSuccess={responseGoogle}
-                      isSignedIn={true}
-                      className="oauth-google-element"
-                    />
-                  </div>
-
-                  <div className="oauth-element">
-                    <MicrosoftLogin
-                      clientId={"baa3b947-094b-490f-91c6-318f2eabf0fe"}
-                      authCallback={authHandler}
-                      graphScopes={["user.read", "Files.Read.All"]}
-                      children={undefined}
-                    />
                   </div>
                 </div>
               </div>

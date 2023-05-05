@@ -142,6 +142,10 @@
     border-radius: 8px;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #loginPage .flex {
@@ -261,6 +265,7 @@ input#email {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 40px 0px;
 }
 
 #loginPage .oauth-btn span {
