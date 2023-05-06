@@ -94,10 +94,16 @@ const ChatInterface = (props: any) => {
         props.setCheckProfileIcon(e.target.checked);
         if (props.checkProfileIcon) {
             document.getElementById('profileicon').style.display = "flex";
-            document.getElementById('profileimg').style.display = "flex";
         } else {
             document.getElementById('profileicon').style.display = "none";
-            document.getElementById('profileimg').style.display = "none";
+        }
+
+        if (props.profileIconUrl) {
+            if (props.checkProfileIcon) {
+                document.getElementById('profileimg').style.display = "flex";
+            } else {
+                document.getElementById('profileimg').style.display = "none";
+            }
         }
     }
 

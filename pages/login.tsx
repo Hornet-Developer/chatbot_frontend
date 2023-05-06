@@ -33,15 +33,15 @@ const Login = () => {
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
-  const start = () => {
-    gapi.client.init({
-      clientId:
-        "1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com",
-      scope: "email",
-    });
-  };
   useEffect(() => {
-    gapi.load("client:auth2", start);
+    function start() {
+      gapi.client.init({
+        clientId: "1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com",
+        scope: 'email',
+      });
+    }
+
+    gapi.load('client:auth2', start);
   }, []);
 
   const authSuccessful = (response: any) => {

@@ -23,6 +23,9 @@ import '@/assets/css/dashboard.css';
 import '@/assets/css/chatbotsetting.css';
 import '@/assets/css/chatinterface.css';
 import '@/assets/css/chatinterface-responsive.css'
+import '@/assets/css/embed.css';
+import '@/assets/css/delete.css'
+import '@/assets/css/share.css';
 
 // Files
 import useToggle from "@/hooks/useToggle";
