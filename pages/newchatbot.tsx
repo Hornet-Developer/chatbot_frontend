@@ -34,6 +34,11 @@ const NewChatbot = () => {
       return oldValues.filter((_, i) => i !== index)
     });
   }
+    
+  const linkChange = (e: React.ChangeEvent<HTMLInputElement>,index:any)=>{
+      linkList[index].link = e.target.value;
+      setLinkList([...linkList])
+  }
 
   const add = () => {
       setLinkList(linkList.concat({link: ''}));
@@ -272,7 +277,9 @@ const NewChatbot = () => {
                   {
                     linkList.map((link, index) => (
                       <div key={index} className="link-form">
-                        <input className="link-input" defaultValue={link.link} placeholder="https://www.example.com/privacy-policy"/>
+                        <input className="link-input" value={link.link} onChange={(e)=>{
+                              linkChange(e,index)
+                          }} placeholder="https://www.example.com/privacy-policy"/>
                           <IconButton type="submit" style={{marginLeft: 4}} onClick={() => deleteOne(index)}>
                             <DeleteIcon className="link-delete"/>
                           </IconButton>
