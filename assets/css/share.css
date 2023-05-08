@@ -95,3 +95,16 @@
     align-items: center;
     padding-top: 32px;
 }
+
+#share .link {
+    background-color: #f1f5f9;
+    height: 32px;
+    font-size: 12px;
+    line-height: 16px;
+    align-items: center;
+    display: flex;
+    padding: 8px;
+    margin: 20px 0px 0px;
+    white-space: nowrap;
+    overflow: auto;
+}

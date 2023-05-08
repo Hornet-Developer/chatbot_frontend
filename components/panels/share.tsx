@@ -2,9 +2,14 @@ import Head from "next/head";
 import { Fragment } from "react"
 import Title from "./Title";
 
+import React from "react";
+
 import { styled } from '@mui/material/styles';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const IOSSwitch = styled((props: SwitchProps) => (
     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -58,27 +63,49 @@ const IOSSwitch = styled((props: SwitchProps) => (
   }));
 
 const Share = () => {
+    const [open, setOpen] = React.useState(false);
+    const [link, setLink] = React.useState("");
+
+    const handleClick = () => {
+      setOpen(true);
+      setLink("https://www.chatbase.co/chatbot-iframe/8Pw_5lznqArZNq9_Qn31h");
+    };
+
     return (
         <Fragment>
             <Head>Share Chatbot</Head>
             <section id="share">
                 <div className="widget">
                     <Title title="Share Chatbot" />
-                    <div className="element">
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                        open={open}
+                        autoHideDuration={2000}           
+                    >
+                        <Alert severity="success" style={{minWidth: 300}}>
+                            <AlertTitle>Success</AlertTitle>
+                            Chatbot visibility updated
+                        </Alert>
+                    </Snackbar>
+                    {!link ? (<div className="element">
                         <span className="topic">Change chatbot visibility</span>
                         <span className="title">By continuing your chatbot will become public</span>
                         <div className="main">
                             <FormControlLabel
-                                control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                                control={<IOSSwitch sx={{ m: 1 }} />}
                                 label=""
                                 style={{margin: 'auto'}}
                             />
                             <span className="description"><b>Require login for someone to use your chatbot</b> (If you don't require login, the messages they send will count for your account)</span>
                         </div>
                         <div className="btn-form">
-                            <button className="full-btn">Save changes</button>
+                            <button className="full-btn" onClick={handleClick}>Save changes</button>
                         </div>
-                    </div>
+                    </div>) :
+                    (<div className="element" >
+                        <span className="topic">Use this link to access the chatbot</span>
+                        <span className="link">{link}</span>
+                    </div>)}
                 </div>
             </section>
         </Fragment>
