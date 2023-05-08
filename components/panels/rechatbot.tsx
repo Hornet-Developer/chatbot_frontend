@@ -265,7 +265,7 @@ const ReChatbot = () => {
                             {
                                 linkList.map((link, index) => (
                                     <div key={index} className="link-form">
-                                        <input className="link-input" defaultValue={link.link} placeholder="https://www.example.com/privacy-policy"/>
+                                        <input className="link-input" value={link.link} placeholder="https://www.example.com/privacy-policy"/>
                                             <IconButton type="submit" style={{marginLeft: 4}} onClick={() => deleteOne(index)}>
                                                 <DeleteIcon className="link-delete"/>
                                             </IconButton>
