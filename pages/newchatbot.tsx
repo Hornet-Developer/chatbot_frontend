@@ -12,14 +12,9 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { create_botSetting } from "@/redux/reducer/settingReducer";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 
 const NewChatbot = () => {
   const [url, setUrl] = React.useState("");
-  const [text, setText] = React.useState("");
-  const [length, setLength] = React.useState();
 
   const [linkList, setLinkList] = React.useState([
     { link: 'https://mui.com/material-ui/react-switch/'},
@@ -28,7 +23,7 @@ const NewChatbot = () => {
     { link: 'https://mui.com/material-ui/react-button-group/'},
     { link: 'https://mui.com/material-ui/react-divider/'},
     { link: 'https://mui.com/material-ui/react-skeleton/'},
-  ])
+  ]);
 
   const deleteAll = () => {
     setLinkList([]);

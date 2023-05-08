@@ -12,29 +12,46 @@ const Embed = () => {
     const [successOpen, setSuccessOpen] = React.useState(false);
     const [faildOpen, setFaildOpen] = React.useState(false);
     const [domain, setDomain] = React.useState("");
+    const [visibility, setVisibility] = React.useState("");
 
     const [chatbotId, setChatbotId] = React.useState("");
 
-    const [link, setLink] = React.useState("");
-    var domainLink = "";
-
     const handleClick = () => {
         setSuccessOpen(true);
+        setVisibility("private_but_can_be_embedded");
     };
 
     const onChangeDomain = (e: React.ChangeEvent<HTMLInputElement>) => {
-        domainLink = e.target.value;
-        setDomain(domainLink);
+        setDomain(e.target.value);
+    }
+
+    const onChangeVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setVisibility(e.target.value);
     }
 
     const handleDomainClick = () => {
-        setDomain(domainLink);
+        setDomain(domain);
         if (domain) {
             setChatbotId("4rPHhnrCB_5q8Fhm6fJFg");
-            console.log(domain);
         } else {
             setFaildOpen(true);
         }
+    };
+
+    const handleSuccessClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setSuccessOpen(false);
+    };
+
+    const handleFaildClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setFaildOpen(false);
     };
 
     return (
@@ -46,7 +63,8 @@ const Embed = () => {
                     <Snackbar
                         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                         open={successOpen}
-                        autoHideDuration={1000}           
+                        autoHideDuration={1000}
+                        onClose={handleSuccessClose}        
                     >
                         <Alert severity="success" style={{minWidth: 300}}>
                             <AlertTitle>Success</AlertTitle>
@@ -56,17 +74,18 @@ const Embed = () => {
                     <Snackbar
                         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                         open={faildOpen}
-                        autoHideDuration={1000}           
+                        autoHideDuration={1000}
+                        onClose={handleFaildClose}            
                     >
                         <Alert severity="warning" style={{minWidth: 300}}>
                             <AlertTitle>Warning</AlertTitle>
                             Domain invaild
                         </Alert>
                     </Snackbar>
-                    {!successOpen ? (<div className="element">
+                    {!visibility ? (<div className="element">
                         <span className="topic">Change chatbot visibility</span>
                         <span className="title">Visibilty</span>
-                        <select className="chatbot-select" defaultValue={0}>
+                        <select className="chatbot-select" defaultValue={0} onChange={onChangeVisibility}>
                             <option value="private_but_can_be_embedded">Private but can be embedded on website</option>
                             <option value="public">public</option>
                         </select>

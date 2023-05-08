@@ -8,11 +8,38 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 import { useAppDispatch } from "@/redux/hooks";
 import { create_botSetting } from "@/redux/reducer/settingReducer";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 import Title from "./Title";
 
 const ReChatbot = () => {
   const [url, setUrl] = React.useState("");
+
+  const [linkList, setLinkList] = React.useState([
+    { link: 'https://mui.com/material-ui/react-switch/'},
+    { link: 'https://mui.com/material-ui/react-typography/'},
+    { link: 'https://mui.com/material-ui/react-dialog/'},
+    { link: 'https://mui.com/material-ui/react-button-group/'},
+    { link: 'https://mui.com/material-ui/react-divider/'},
+    { link: 'https://mui.com/material-ui/react-skeleton/'},
+  ]);
+
+  const deleteAll = () => {
+    setLinkList([]);
+  }
+
+  const deleteOne = async (index: any) => {
+    setLinkList(oldValues => {
+      return oldValues.filter((_, i) => i !== index)
+    });
+  }
+
+  console.log(linkList);
+
+  const add = () => {
+      setLinkList(linkList.concat({link: ''}));
+  }
 
   const dispatch = useAppDispatch();
 
@@ -228,19 +255,31 @@ const ReChatbot = () => {
                         <div className="element">
                             <span className="title">Links to include</span>
                             <div className="sbtn-widget">
-                                <button className="sbtn">Add</button>
+                                {
+                                linkList.length != 0 ? 
+                                (<button className="del-all" onClick={deleteAll}>Delete all</button>)
+                                :
+                                (<div />)
+                                }
                             </div>
-                            <div className="input-form">
-                                <input
-                                    className="input"
-                                    placeholder="https://www.example.com"
-                                />
-                                <button className="wbtn"> + Fetch More Links</button>
+                            {
+                                linkList.map((link, index) => (
+                                    <div key={index} className="link-form">
+                                        <input className="link-input" defaultValue={link.link} placeholder="https://www.example.com/privacy-policy"/>
+                                            <IconButton type="submit" style={{marginLeft: 4}} onClick={() => deleteOne(index)}>
+                                                <DeleteIcon className="link-delete"/>
+                                            </IconButton>
+                                    </div>
+                                ))
+                            }
+                            <div className="sbtn-widget">
+                                <button className="sbtn" onClick={add}>Add</button>
                             </div>
-                            <button className="bbtn" onClick={create_bot}>
-                            Retrain Chatbot
-                            </button>
                         </div>
+                        <hr />
+                        <button className="bbtn">
+                            Retrain Chatbot
+                        </button>
                     </div>
                 </div>
             </div>

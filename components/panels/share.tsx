@@ -71,6 +71,14 @@ const Share = () => {
       setLink("https://www.chatbase.co/chatbot-iframe/8Pw_5lznqArZNq9_Qn31h");
     };
 
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+
     return (
         <Fragment>
             <Head>Share Chatbot</Head>
@@ -80,7 +88,8 @@ const Share = () => {
                     <Snackbar
                         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                         open={open}
-                        autoHideDuration={2000}           
+                        autoHideDuration={2000}
+                        onClose={handleClose}           
                     >
                         <Alert severity="success" style={{minWidth: 300}}>
                             <AlertTitle>Success</AlertTitle>
