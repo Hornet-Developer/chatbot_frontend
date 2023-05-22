@@ -91,31 +91,18 @@ const ReChatbot = () => {
       document.getElementById("list").style.display = "flex";
       document.getElementById("files").style.display = "none";
     }
-  };
 
-  const onWebsite = () => {
-    let state = document.getElementById("website").style.display;
-
-    if (state === "none") {
-      document.getElementById("list").style.display = "none";
-      document.getElementById("website").style.display = "flex";
-    } else {
-      document.getElementById("list").style.display = "flex";
-      document.getElementById("website").style.display = "none";
+    const deleteOne = async (index: any) => {
+   debugger
+        linkList.splice(index,1);
+        setLinkList([])
+        setLinkList([...linkList]);
     }
-  };
-
-  const onText = () => {
-    let state = document.getElementById("text").style.display;
-
-    if (state === "none") {
-      document.getElementById("list").style.display = "none";
-      document.getElementById("text").style.display = "flex";
-    } else {
-      document.getElementById("list").style.display = "flex";
-      document.getElementById("text").style.display = "none";
+    
+    const linkChange = (e: React.ChangeEvent<HTMLInputElement>,index:any)=>{
+        linkList[index].link = e.target.value;
+        setLinkList([...linkList])
     }
-  };
 
   const linkChange = (e: React.ChangeEvent<HTMLInputElement>, index: any) => {
     linkList[index].link = e.target.value;

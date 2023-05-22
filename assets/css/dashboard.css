@@ -80,6 +80,10 @@
   background-color: #f9fafb;
 }
 
+#dashboardPage .msglog-form:hover {
+  background-color: #f9fafb;
+}
+
 #dashboardPage .msg-1 {
   display: flex;
   flex-direction: row;

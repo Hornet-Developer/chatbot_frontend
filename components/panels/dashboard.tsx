@@ -36,12 +36,10 @@ const Dashboard = () => {
   const log_select = async (conversation_id: any) => {
     localStorage.setItem("conversation_id", conversation_id);
 
-
     get_conversation({ id: conversation_id })
       .then((res) => {
         setMessages(res.data.data);
         setModalState(true);
-
       })
       .catch((err) => {
         console.log(err);

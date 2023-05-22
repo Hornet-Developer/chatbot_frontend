@@ -132,7 +132,6 @@ const ChatbotSetting = () => {
     }
 
     if (chatIconUrl && selectedChatIcon) {
-
       formData.append("Icon", selectedChatIcon);
       await iconUpload(formData).then((result) => {
         if (result.status == 200) {
@@ -154,7 +153,6 @@ const ChatbotSetting = () => {
       });
     }
     if (profileIconUrl && selectedProfileIcon) {
-
       formData.delete("Icon");
       formData.append("Icon", selectedProfileIcon);
       await iconUpload(formData)

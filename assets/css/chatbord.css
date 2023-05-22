@@ -328,6 +328,7 @@ ul.list {
   background: #fff;
   border-radius: 10px;
   position: relative;
+  cursor: pointer;
 }
 
 #chatbotPage .chat-header {
