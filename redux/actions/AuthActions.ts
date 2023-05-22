@@ -1,12 +1,9 @@
-import { AnyAction } from "redux";
-import { GET_BOT_SETTING, SET_BOT_SETTING } from "./actiontypes";
 import axios from "axios";
 
-export const googleAuth = async (googleData: any) => {
-  console.log("googleData: ", googleData);
+export const login = async (loginData: any) => {
   const res = await axios.post(
-    "http://localhost:8080/api/auth/google",
-    googleData
+    "http://localhost:8080/api/auth/login",
+    loginData
   );
-  console.log(res.data);
+  return Promise.resolve({ data: res.data });
 };

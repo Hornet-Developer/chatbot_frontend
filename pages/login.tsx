@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+// import { gapi } from "gapi-script";
 import Image from "next/image";
 import GoogleIcon from "@/assets/imges/google.png";
 import MicrosoftIcon from "@/assets/imges/microsoft.png";
@@ -9,10 +10,11 @@ import inputFields from "@/_mock/login";
 import Head from "next/head";
 import Main from "@/components/layout/Main";
 import GoogleLogin from "react-google-login";
-import MicrosoftLogin from "react-microsoft-login";
 import { gapi } from "gapi-script";
-import { googleAuth } from "../redux/actions/AuthActions";
+import MicrosoftLogin from "react-microsoft-login";
+import { notification } from "antd";
 
+import { login } from "../redux/actions/AuthActions";
 type Inputs = {
   email: string;
   password: string;
@@ -33,15 +35,19 @@ const Login = () => {
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => {
-    function start() {
+  async function start() {
+    const gapi = await import("gapi-script").then((pack) => pack.gapi);
+    gapi.load("client:auth2", () => {
       gapi.client.init({
-        clientId: "1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com",
-        scope: 'email',
+        clientId:
+          "1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com",
+        scope: "email",
       });
-    }
+    });
+  }
 
-    gapi.load('client:auth2', start);
+  useEffect(() => {
+    start();
   }, []);
 
   const authSuccessful = (response: any) => {
@@ -59,12 +65,23 @@ const Login = () => {
     console.log(error);
   };
 
-  const responseGoogle = (response: any) => {
-    console.log(response.profileObj.name);
-    console.log(response.profileObj.email);
+  const responseGoogle = async (response: any) => {
+    const loginData = {
+      mail: response.profileObj.email,
+      type: 1,
+    };
 
-    localStorage.setItem("google_mail", response.profileObj.email);
-    localStorage.setItem("signin_type", "0");
+    await login(loginData)
+      .then((result: any) => {
+        const token = result.data.token;
+        localStorage.setItem("jwtToken", token);
+        notification.success({
+          message: ` Successfully Login`,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

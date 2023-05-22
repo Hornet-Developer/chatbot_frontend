@@ -8,48 +8,89 @@ import BackIcon from "@/assets/imges/back.png";
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { create_botSetting } from "@/redux/reducer/settingReducer";
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
+import { create_botSetting, retrain_bot } from "@/redux/reducer/settingReducer";
+import { uploadPdfs } from "../redux/actions/fileActions";
+import { send } from "process";
+
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, message, Upload, notification } from "antd";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import {
+  createSetting,
+  scraping_url,
+  web_scraping_chatbot,
+} from "../redux/actions/settingActions";
+
+let sendData = new FormData();
 
 const NewChatbot = () => {
   const [url, setUrl] = React.useState("");
-
-  const [linkList, setLinkList] = React.useState([
-    { link: 'https://mui.com/material-ui/react-switch/'},
-    { link: 'https://mui.com/material-ui/react-typography/'},
-    { link: 'https://mui.com/material-ui/react-dialog/'},
-    { link: 'https://mui.com/material-ui/react-button-group/'},
-    { link: 'https://mui.com/material-ui/react-divider/'},
-    { link: 'https://mui.com/material-ui/react-skeleton/'},
-  ]);
-
-  const deleteAll = () => {
-    setLinkList([]);
-  }
-
-  const deleteOne = async (index: any) => {
-    setLinkList(oldValues => {
-      return oldValues.filter((_, i) => i !== index)
-    });
-  }
-    
-  const linkChange = (e: React.ChangeEvent<HTMLInputElement>,index:any)=>{
-      linkList[index].link = e.target.value;
-      setLinkList([...linkList])
-  }
-
-  const add = () => {
-      setLinkList(linkList.concat({link: ''}));
-  }
+  const [text, setText] = React.useState("");
+  const [length, setLength] = React.useState();
+  const [pdfCollection, setPdfCollection] = useState("");
+  const [file, setFile] = useState();
+  const create_bot_flag = useAppSelector(
+    (state) => state.getSetting.create_bot
+  );
 
   const dispatch = useAppDispatch();
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let files = e.target.files;
-    if (!files) return;
-    files.length > 0 && setUrl(URL.createObjectURL(files[0]));
+  const [linkList, setLinkList] = React.useState([]);
+
+  const deleteAll = () => {
+    setLinkList([]);
+  };
+
+  const fetch_links = async () => {
+    const sendData = {
+      URL: document.getElementById("crawl_url").value + "/",
+      limit_count: 20,
+    };
+
+    await scraping_url(sendData)
+      .then((result) => {
+        const urlList = result.data.data;
+        let temp = [];
+        for (let index = 0; index < urlList.length; index++) {
+          const element = urlList[index];
+          temp.push({ link: element });
+        }
+        setLinkList(temp);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteOne = async (index: any) => {
+    setLinkList((oldValues) => {
+      return oldValues.filter((_, i) => i !== index);
+    });
+  };
+
+  const linkChange = (e: React.ChangeEvent<HTMLInputElement>, index: any) => {
+    linkList[index].link = e.target.value;
+    setLinkList([...linkList]);
+  };
+
+  const add = () => {
+    setLinkList(linkList.concat({ link: "" }));
+  };
+
+  const props = {
+    name: "fileList",
+    headers: {
+      authorization: "authorization-text",
+    },
+    maxCount: 1,
+    onChange(e: any) {
+      setUrl(URL.createObjectURL(e.file.originFileObj));
+      setFile(e.file);
+    },
   };
 
   const onFiles = () => {
@@ -88,21 +129,55 @@ const NewChatbot = () => {
     }
   };
 
-  const create_bot = (data: any) => {
-    const mail = localStorage.getItem("google_mail");
+  const create_bot = (emebedding_type: any) => {
+    const formData = new FormData();
+    formData.append("embedding_type", emebedding_type);
 
-    //const mail = "blackphantom0221@gmail.com";
-    if (mail) {
-      const sendData = {
-        chatbot_name: "Bill",
-        characters_number: 2200,
-        mail: mail,
-        embedding_type: data,
-      };
+    if (emebedding_type == 0) {
+      formData.append("file", file.originFileObj);
 
-      dispatch(create_botSetting(sendData));
-    } else {
-      alert("Sign In ...");
+      createSetting(formData)
+        .then((res) => {
+          notification.success({
+            message: ` Successfully created `,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (emebedding_type == 1) {
+      let chatbot_name = document.getElementById("chatbot_name").value;
+      let content = document.getElementById("chatbot_data").value;
+      formData.append("content", content);
+      formData.append("chatbot_name", chatbot_name);
+
+      createSetting(formData)
+        .then((res) => {
+          notification.success({
+            message: ` Successfully created `,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (emebedding_type == 2) {
+      const chatbot_name = document.getElementById("crawl_url").value;
+      if (chatbot_name == "") {
+        notification.error({
+          message: ` Enter url to scrape `,
+        });
+        return;
+      } else {
+        web_scraping_chatbot({ linkList: linkList, chatbot_name: chatbot_name })
+          .then((result) => {
+            notification.success({
+              message: ` Successfully created `,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   };
 
@@ -184,22 +259,14 @@ const NewChatbot = () => {
                     Attach a file to see how many characters are in it
                   </span>
                   <br />
-                  <input
-                    type="file"
-                    id="myPdf"
-                    accept=".pdf"
-                    onChange={onChange}
-                  />
-                  <br />
-                  <span className="attach-txt">
-                    NOTE: Uploading a PDF using safari doesn't work, we're
-                    looking into the issue.Make sure the text is OCR'd, i.e. you
-                    can copy it.
-                  </span>
+                  <Upload {...props}>
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                  </Upload>
+
+                  <button className="btn" onClick={() => create_bot(0)}>
+                    Create Chatbot
+                  </button>
                 </div>
-                <button className="btn" onClick={() => create_bot(0)}>
-                  Create Chatbot
-                </button>
               </div>
               <div id="text" style={{ display: "none" }}>
                 <div className="back">
@@ -213,8 +280,16 @@ const NewChatbot = () => {
                     <span className="back-btn-txt">Back</span>
                   </button>
                 </div>
-                <input className="title" placeholder="Chatbot Name" />
-                <textarea className="data" placeholder="Data" />
+                <input
+                  className="title"
+                  placeholder="Chatbot Name"
+                  id="chatbot_name"
+                />
+                <textarea
+                  className="data"
+                  placeholder="Data"
+                  id="chatbot_data"
+                />
                 <button className="btn" onClick={() => create_bot(1)}>
                   Create Chatbot
                 </button>
@@ -238,10 +313,13 @@ const NewChatbot = () => {
                   <span className="title">Crawl</span>
                   <div className="input-form">
                     <input
+                      id="crawl_url"
                       className="input"
                       placeholder="https://www.example.com"
                     />
-                    <button className="btn">Fetch Links</button>
+                    <button className="btn" onClick={fetch_links}>
+                      Fetch Links
+                    </button>
                   </div>
                   <span className="description">
                     This will crawl all the links starting with the URL (not
@@ -267,27 +345,37 @@ const NewChatbot = () => {
                 <div className="element">
                   <span className="title">Links to include</span>
                   <div className="sbtn-widget">
-                    {
-                      linkList.length != 0 ? 
-                      (<button className="del-all" onClick={deleteAll}>Delete all</button>)
-                      :
-                      (<div />)
-                    }
+                    {linkList.length != 0 ? (
+                      <button className="del-all" onClick={deleteAll}>
+                        Delete all
+                      </button>
+                    ) : (
+                      <div />
+                    )}
                   </div>
-                  {
-                    linkList.map((link, index) => (
-                      <div key={index} className="link-form">
-                        <input className="link-input" value={link.link} onChange={(e)=>{
-                              linkChange(e,index)
-                          }} placeholder="https://www.example.com/privacy-policy"/>
-                          <IconButton type="submit" style={{marginLeft: 4}} onClick={() => deleteOne(index)}>
-                            <DeleteIcon className="link-delete"/>
-                          </IconButton>
-                      </div>
-                    ))
-                  }
+                  {linkList.map((link, index) => (
+                    <div key={index} className="link-form">
+                      <input
+                        className="link-input"
+                        value={link.link}
+                        onChange={(e) => {
+                          linkChange(e, index);
+                        }}
+                        placeholder="https://www.example.com/privacy-policy"
+                      />
+                      <IconButton
+                        type="submit"
+                        style={{ marginLeft: 4 }}
+                        onClick={() => deleteOne(index)}
+                      >
+                        <DeleteIcon className="link-delete" />
+                      </IconButton>
+                    </div>
+                  ))}
                   <div className="sbtn-widget">
-                    <button className="sbtn" onClick={add}>Add</button>
+                    <button className="sbtn" onClick={add}>
+                      Add
+                    </button>
                   </div>
                 </div>
                 <hr />

@@ -42,7 +42,7 @@ const Chatbot = () => {
   const [input, setInput] = useState<string>("");
   const [chatData, setChatData] = useState<ChatDataType | []>([]);
   const [chatId, setChatId] = useState();
-  const [chatbotList, setChatbotList] = useState([{chatbot_id: 1, chatbot_name: 1}, {chatbot_id: 1, chatbot_name: 1}]);
+  const [chatbotList, setChatbotList] = useState([]);
   const { isSideMenuVisible } = useContext(SideMenuContext);
   const isNotInput = trim(input) === "";
   const askTime = useTime();
@@ -77,9 +77,7 @@ const Chatbot = () => {
   };
 
   const bot_select = async (chatbot_id: any) => {
-    localStorage.setItem("chatbot_id", chatbot_id);
-    window.location.href = "/settings";
-    console.log(chatbot_id);
+    window.location.href = "/settings/" + chatbot_id;
   };
 
   useEffect(() => {
@@ -89,23 +87,17 @@ const Chatbot = () => {
   }, [chatData]);
 
   useEffect(() => {
-    const mail = localStorage.getItem("google_mail");
-
-    if (mail) {
-      const sendData = {
-        mail: mail,
-      };
-      getChatbotList(sendData)
-        .then((res) => {
-          if (res.data.data.length > 0) {
-            setInit(false);
-            setChatbotList(res.data.data);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    getChatbotList()
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.length > 0) {
+          setInit(false);
+          setChatbotList(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
