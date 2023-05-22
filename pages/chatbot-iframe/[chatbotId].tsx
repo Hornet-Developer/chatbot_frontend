@@ -3,44 +3,71 @@ import { useEffect, useState, useRef } from "react";
 import { Source_Serif_Pro } from "next/font/google";
 import { getSetting } from "../../redux/actions/settingActions";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
+type ChatbotProps = {
+  chatbotId: string;
+};
+
 const Chatbot = () => {
   const [chat_id, setChatId] = useState("");
-  const chatbot_id = useAppSelector((state) => state.getSetting.chatbot_id);
-
   const [id, setId] = useState("");
   const [inputMessage, setInputMessage] = useState("");
+  const [initMsg, setInitMsg] = useState("");
+  const [suggestMsg, setSuggestMsg] = useState("");
   const [isFetching, setIsFetching] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+  const [profileIconUrl, setProfileIconUrl] = useState("");
+  const [msgColor, setMsgColor] = useState("");
+
+  const router = useRouter();
+  const { chatbotId } = router.query;
+  //const chatbot_id = useAppSelector((state) => state.getSetting.chatbot_id);
 
   const req_qa_box: any = useRef(null);
 
-  const [messages, setMessages] = useState([
-    { content: "Hi! What can I answer for you today?", role: "assistant" },
-  ]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const id: any = params.get("id");
-    setId(id);
-    fetch(`${base_url}/api/chats?id=${id}&chat_id=${chat_id}`)
-      .then((response) => response.json())
-      .then((data) => setMessages([...messages, ...data]))
-      .catch((error) => console.error(error));
+    //var chatbot_id = localStorage.getItem("chatbot_id");
+    if (chatbotId) {
+      getSetting(chatbotId)
+        .then((result) => {
+          const data = result.data.data.setting;
+          setMessages([
+            { content: data.interface_init_msg, role: "assistant" },
+          ]);
+          setInitMsg(data.interface_init_msg);
+          setSuggestMsg(data.interface_suggest_msg);
+          setProfileIconUrl(data.profile_picture);
+          setDisplayName(data.display_name);
+          setMsgColor(data.user_msg_color);
+        })
+        .catch((err) => {
+          setIsLogin(false);
+          console.log(err);
+        });
 
-    document
-      .getElementById("input1")
-      .addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          if (document.querySelector("input").value !== "") {
-            document.getElementById("myBtn").click();
+      fetch(`${base_url}/api/chats?id=${id}&chat_id=${chat_id}`)
+        .then((response) => response.json())
+        .then((data) => setMessages([...messages, ...data]))
+        .catch((error) => console.error(error));
+
+      document
+        .getElementById("input1")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            if (document.querySelector("input").value !== "") {
+              document.getElementById("myBtn").click();
+            }
           }
-        }
-      });
-  }, []);
+        });
+    }
+  }, [chatbotId]);
 
   const handleChatResponse = (message: any, answer: any, chat_id: any) => {
     document.getElementById("loading").style.display = "none";
@@ -48,6 +75,7 @@ const Chatbot = () => {
     setChatId(chat_id);
     setInputMessage("");
     setIsFetching(false);
+    document.getElementById("loading").style.display = "none";
   };
 
   useEffect(() => {
@@ -62,15 +90,12 @@ const Chatbot = () => {
         answer: "Here is response #" + Math.random(),
         chat_id: 100,
       };
-      // setTimeout(() => {
-      //   document.getElementById("loading").style.display = "none";
-      // }, 2000);
 
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          chatbot_id: chatbot_id,
+          chatbot_id: chatbotId,
           message: inputMessage,
         }),
       };
@@ -80,7 +105,6 @@ const Chatbot = () => {
           await fetch(`http://localhost:8080/api/chat/create`, requestOptions)
         ).json();
         handleChatResponse(inputMessage, data.text, data.chat_id);
-        document.getElementById("loading").style.display = "none";
       };
       dataFetch();
 
@@ -105,15 +129,43 @@ const Chatbot = () => {
 
   const PageReload = () => {
     if (!inputMessage) {
-      setMessages([
-        { content: "Hi! What can I answer for you today?", role: "assistant" },
-      ]);
+      setMessages([{ content: initMsg, role: "assistant" }]);
     }
   };
 
   return (
     <div id="chatdemo-container">
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          {profileIconUrl ? (
+            <img id="profileimg" className="profileicon" src={profileIconUrl} />
+          ) : (
+            <div />
+          )}
+          {displayName ? (
+            <span
+              style={{ color: `${msgColor}` }}
+              id="displayname"
+              className="displayname"
+            >
+              {displayName}
+            </span>
+          ) : (
+            <div />
+          )}
+        </div>
         <ArrowPathIcon className="reload" onClick={PageReload} />
       </div>
       <hr />
@@ -142,12 +194,10 @@ const Chatbot = () => {
           <div className="help-box-container">
             <div
               className="help-box"
-              onClick={() =>
-                handleSendMessageMock("What questions can you answer for me?")
-              }
+              onClick={() => handleSendMessageMock(suggestMsg)}
             >
               {" "}
-              What questions can you answer for me?{" "}
+              {suggestMsg}{" "}
             </div>
           </div>
           <div className="input-container">

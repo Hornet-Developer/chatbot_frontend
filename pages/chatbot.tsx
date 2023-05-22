@@ -58,7 +58,6 @@ const Chatbot = () => {
   };
 
   const handleRequest = async () => {
-    console.log("AAA");
     const newRequest = {
       question: input,
       askTime,
@@ -78,9 +77,7 @@ const Chatbot = () => {
   };
 
   const bot_select = async (chatbot_id: any) => {
-    localStorage.setItem("chatbot_id", chatbot_id);
-    window.location.href = "/settings";
-    console.log(chatbot_id);
+    window.location.href = "/settings/" + chatbot_id;
   };
 
   useEffect(() => {
@@ -90,23 +87,17 @@ const Chatbot = () => {
   }, [chatData]);
 
   useEffect(() => {
-    const mail = localStorage.getItem("google_mail");
-
-    if (mail) {
-      const sendData = {
-        mail: mail,
-      };
-      getChatbotList(sendData)
-        .then((res) => {
-          if (res.data.data.length > 0) {
-            setInit(false);
-            setChatbotList(res.data.data);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    getChatbotList()
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.length > 0) {
+          setInit(false);
+          setChatbotList(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

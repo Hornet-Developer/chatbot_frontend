@@ -1,7 +1,7 @@
 #chatdemo-container {
   background-color: #ffffff;
   width: 100%;
-  padding: 20px 20px;
+  padding: 20px;
   background: #fff;
   border-radius: 8px;
   margin: 0px 0px 65px;
@@ -81,17 +81,17 @@
   align-items: center;
 }
 
-#chatdemo-container input[type=text] {
+#chatdemo-container input[type="text"] {
   flex: 1 1 0%;
   padding: 0;
   margin: 0;
   line-height: 1.25rem;
-  font-size: .875rem;
+  font-size: 0.875rem;
   border: unset;
-  height: 36px
+  height: 36px;
 }
 
-#chatdemo-container input[type=text]:focus {
+#chatdemo-container input[type="text"]:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
@@ -128,23 +128,22 @@
   height: 44px;
   position: relative;
   border: 5px solid #959394;
-  border-radius: 8px;
+  border-radius: 28px 28px 28px 0px;
 }
 #chatdemo-container .loader::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 32px;
   height: 28px;
   border-radius: 50% 50% 0 0;
   left: 50%;
   top: 0;
-  transform: translate(-50% , -100%)
-
+  transform: translate(-50%, -100%);
 }
 #chatdemo-container .loader::after {
-  content: '';
+  content: "";
   position: absolute;
-  transform: translate(-50% , -50%);
+  transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
   width: 8px;
@@ -157,15 +156,29 @@
 
 @keyframes flash {
   0% {
-    background-color: rgba(149, 147,148, 0.25);
-    box-shadow: 16px 0 rgba(149, 147,148, 0.25), -16px 0 rgba(149, 147,148, 1);
+    background-color: rgba(149, 147, 148, 0.25);
+    box-shadow: 16px 0 rgba(149, 147, 148, 0.25), -16px 0 rgba(149, 147, 148, 1);
   }
   50% {
-    background-color: rgba(149, 147,148, 1);
-    box-shadow: 16px 0 rgba(149, 147,148, 0.25), -16px 0 rgba(149, 147,148, 0.25);
+    background-color: rgba(149, 147, 148, 1);
+    box-shadow: 16px 0 rgba(149, 147, 148, 0.25),
+      -16px 0 rgba(149, 147, 148, 0.25);
   }
   100% {
-    background-color: rgba(149, 147,148, 0.25);
-    box-shadow: 16px 0 rgba(149, 147,148, 1), -16px 0 rgba(149, 147,148, 0.25);
+    background-color: rgba(149, 147, 148, 0.25);
+    box-shadow: 16px 0 rgba(149, 147, 148, 1), -16px 0 rgba(149, 147, 148, 0.25);
   }
+}
+
+#chatdemo-container .profileicon {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 18px;
+  margin-right: 5px;
+}
+
+#chatdemon-container .displayname {
+  font-weight: bold;
+  font-size: 18px;
 }

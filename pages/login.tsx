@@ -12,7 +12,9 @@ import Main from "@/components/layout/Main";
 import GoogleLogin from "react-google-login";
 import { gapi } from "gapi-script";
 import MicrosoftLogin from "react-microsoft-login";
+import { notification } from "antd";
 
+import { login } from "../redux/actions/AuthActions";
 type Inputs = {
   email: string;
   password: string;
@@ -33,15 +35,19 @@ const Login = () => {
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
-  const start = () => {
-    gapi.client.init({
-      clientId:
-        "1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com",
-      scope: "email",
+  async function start() {
+    const gapi = await import("gapi-script").then((pack) => pack.gapi);
+    gapi.load("client:auth2", () => {
+      gapi.client.init({
+        clientId:
+          "1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com",
+        scope: "email",
+      });
     });
-  };
+  }
+
   useEffect(() => {
-    gapi.load("client:auth2", start);
+    start();
   }, []);
 
   const authSuccessful = (response: any) => {
@@ -59,11 +65,23 @@ const Login = () => {
     console.log(error);
   };
 
-  const responseGoogle = (response: any) => {
-    console.log(response.profileObj.name);
-    console.log(response.profileObj.email);
+  const responseGoogle = async (response: any) => {
+    const loginData = {
+      mail: response.profileObj.email,
+      type: 1,
+    };
 
-    localStorage.setItem("google_mail", response.profileObj.email);
+    await login(loginData)
+      .then((result: any) => {
+        const token = result.data.token;
+        localStorage.setItem("jwtToken", token);
+        notification.success({
+          message: ` Successfully Login`,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -78,56 +96,29 @@ const Login = () => {
               <div className="log-google">
                 <div className="flex">
                   <div className="login">
-                    <div className="login-title">
-                      <h4>Login</h4>
-                    </div>
-                    <form action="#">
-                      <div className="form">
-                        {inputFields.map((field, index) => (
-                          <Input
-                            key={index}
-                            value={inputs[field.name as keyof Inputs]}
-                            onChange={handleChange}
-                            {...field}
-                          />
-                        ))}
-
-                        <span>
-                          <a href="#">Forgot password?</a>
-                        </span>
+                    <div className="oauth-btn">
+                      <div className="oauth-element">
+                        <GoogleLogin
+                          clientId="1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com"
+                          buttonText="Sign in with Google"
+                          scope="profile"
+                          onFailure={onFailure}
+                          cookiePolicy={"single_host_origin"}
+                          onSuccess={responseGoogle}
+                          isSignedIn={true}
+                          className="oauth-google-element"
+                        />
                       </div>
-                    </form>
-                    <div className="login-google">
-                      <div className="Login-btn">
-                        <a href="#">Login</a>
+
+                      <div className="oauth-element">
+                        <MicrosoftLogin
+                          clientId={"baa3b947-094b-490f-91c6-318f2eabf0fe"}
+                          authCallback={authHandler}
+                          graphScopes={["user.read", "Files.Read.All"]}
+                          children={undefined}
+                        />
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div className="oauth-btn">
-                  <span>--- OR ---</span>
-
-                  <div className="oauth-element">
-                    <GoogleLogin
-                      clientId="1037111719801-57leuusf3igree0os4oaa7iu2qf8uocs.apps.googleusercontent.com"
-                      buttonText="Sign in with Google"
-                      scope="profile"
-                      onFailure={onFailure}
-                      cookiePolicy={"single_host_origin"}
-                      onSuccess={responseGoogle}
-                      isSignedIn={true}
-                      className="oauth-google-element"
-                    />
-                  </div>
-
-                  <div className="oauth-element">
-                    <MicrosoftLogin
-                      clientId={"baa3b947-094b-490f-91c6-318f2eabf0fe"}
-                      authCallback={authHandler}
-                      graphScopes={["user.read", "Files.Read.All"]}
-                      children={undefined}
-                    />
                   </div>
                 </div>
               </div>
